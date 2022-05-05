@@ -71,7 +71,7 @@ func opCheck(arg string) bool {
 
 // shitty overflow
 func overFlow(sum int) bool {
-	if (sum > 999999999999999999) || (sum < -999999999999999999) {
+	if (sum > 999999999999999999) || sum < (-999999999999999999) {
 		return true
 	}
 	return false
