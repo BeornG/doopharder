@@ -6,7 +6,7 @@ import (
 
 var op = []string{"+", "-", "*", "/", "%"}
 
-//dont copy unless you can explain it and know its flaws
+// dont copy unless you can explain it and know its flaws
 func main() {
 	args := os.Args[1:]
 	var result int
@@ -69,7 +69,7 @@ func opCheck(arg string) bool {
 	return false
 }
 
-//shitty overflow
+// shitty overflow
 func overFlow(sum int) bool {
 	if (sum > 999999999999999999) || (sum < -999999999999999999) {
 		return true
