@@ -1,33 +1,30 @@
 package main
 
-import (
-	"os"
-)
+import "os"
 
 var op = []string{"+", "-", "*", "/", "%"}
 
-// dont copy unless you can explain it and know its flaws
 func main() {
 	args := os.Args[1:]
 	var result int
 	switch {
 	case len(args) < 3 || len(args) > 3:
 		return
-	case opCheck(args[0]) || opCheck(args[2]):
+	case opCheck(args[0]) || !opCheck(args[1]) || opCheck(args[2]):
 		return
-	case !opCheck(args[1]):
-		return
-	case !validcharCheck(args[0]) || !validcharCheck(args[2]):
+	case validcharCheck(args[0]) || validcharCheck(args[2]):
 		return
 	}
 	arg1 := sToI(args[0])
-	arg3 := sToI(args[2])
 	arg2 := args[1]
+	arg3 := sToI(args[2])
 	switch {
-	case arg2 == op[4] && arg3 == 0:
-		os.Stdout.WriteString("No modulo by 0\n")
 	case arg2 == op[3] && arg3 == 0:
 		os.Stdout.WriteString("No division by 0\n")
+		return
+	case arg2 == op[4] && arg3 == 0:
+		os.Stdout.WriteString("No modulo by 0\n")
+		return
 	}
 	switch arg2 {
 	case op[0]:
@@ -48,14 +45,14 @@ func main() {
 	}
 }
 
-func printcalc(sum int) {
+func printcalc(result int) {
 	switch {
-	case overFlow(sum):
+	case overFlow(result):
 		return
-	case sum == 0:
+	case (result == 0):
 		os.Stdout.WriteString("0\n")
 	default:
-		os.Stdout.WriteString(iToS(sum))
+		os.Stdout.WriteString(iToS(result))
 		os.Stdout.WriteString("\n")
 	}
 }
@@ -70,8 +67,8 @@ func opCheck(arg string) bool {
 }
 
 // shitty overflow
-func overFlow(sum int) bool {
-	if (sum > 999999999999999999) || sum < (-999999999999999999) {
+func overFlow(result int) bool {
+	if (result > 999999999999999999) || (result < -999999999999999999) {
 		return true
 	}
 	return false
@@ -83,18 +80,18 @@ func validcharCheck(s string) bool {
 	for i := 0; i <= len(runes)-1; i++ {
 		switch {
 		case runes[i] >= 33 && runes[i] <= 36:
-			return false
+			return true
 		case runes[i] >= 38 && runes[i] <= 41:
-			return false
+			return true
 		case runes[i] == 44:
-			return false
+			return true
 		case runes[i] == 46:
-			return false
+			return true
 		case runes[i] >= 58 && runes[i] <= 127:
-			return false
+			return true
 		}
 	}
-	return true
+	return false
 }
 
 func sToI(s string) int {
